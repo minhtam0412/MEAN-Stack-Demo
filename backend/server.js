@@ -1,5 +1,4 @@
 const express = require('express');
-const env = require('dotenv').config();
 const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -10,7 +9,7 @@ const camelcaseKeys = require('camelcase-keys');
 const DB_MONGO = require('../backend/config/db.config');
 
 const corsOptions = {
-  origin: "http://localhost:4200;"
+  origin: ['http://localhost:4200'],
 };
 const removeEmptyProperties = () => {
   return function (req, res, next) {
@@ -40,6 +39,8 @@ mongoose
   });
 
 const employeeRoute = require('../backend/routes/employee.route');
+const userRoute = require('../backend/routes/user.route');
+
 const app = express();
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -51,16 +52,17 @@ app.use(
 );
 app.use(removeEmptyProperties());
 app.use(camelcase());
-app.use(logger('short'));
+app.use(logger('dev'));
 app.use(cors(corsOptions));//cross domain
 app.use(express.static(path.join(__dirname, '../dist/mean-stack-crud-app')));
 app.use('/', express.static(path.join(__dirname, '../dist/mean-stack-crud-app')));
-app.use('/api', employeeRoute);
 
-// Setting up port with expressjs
+app.use('/api', employeeRoute);
+userRoute(app);
+
 // Create port
-console.log('port: ', process.env.API_PORT)
 const port = process.env.API_PORT || 4000;
+// Setting up port with expressjs
 const server = app.listen(port, () => {
   console.log('Connected to port ' + port)
 });
