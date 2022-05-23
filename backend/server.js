@@ -1,21 +1,44 @@
 const express = require('express');
+const env = require('dotenv').config();
 const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const logger = require('morgan');
+const omitEmpty = require('omit-empty');
+const camelcaseKeys = require('camelcase-keys');
+const DB_MONGO = require('../backend/config/db.config');
+
 const corsOptions = {
-  origin: "http://localhost:4200"
+  origin: "http://localhost:4200;"
 };
+const removeEmptyProperties = () => {
+  return function (req, res, next) {
+    req.body = omitEmpty(req.body);
+    req.params = omitEmpty(req.params);
+    req.query = omitEmpty(req.query);
+    next()
+  }
+};
+const camelcase = () => {
+  return function (req, res, next) {
+    req.body = camelcaseKeys(req.body, {deep: true});
+    req.params = camelcaseKeys(req.params);
+    req.query = camelcaseKeys(req.query);
+    next()
+  }
+};
+
 // Connecting with mongo db
 mongoose
-  .connect('mongodb://127.0.0.1:27017/mydatabase')
+  .connect(DB_MONGO.url, {useNewUrlParser: true, useUnifiedTopology: true})
   .then((x) => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
   .catch((err) => {
     console.error('Error connecting to Mongo', err.reason)
   });
-// Setting up port with express js
+
 const employeeRoute = require('../backend/routes/employee.route');
 const app = express();
 // parse requests of content-type - application/json
@@ -26,16 +49,18 @@ app.use(
     extended: false,
   }),
 );
-app.use(cors(corsOptions));
+app.use(removeEmptyProperties());
+app.use(camelcase());
+app.use(logger('short'));
+app.use(cors(corsOptions));//cross domain
 app.use(express.static(path.join(__dirname, '../dist/mean-stack-crud-app')));
 app.use('/', express.static(path.join(__dirname, '../dist/mean-stack-crud-app')));
 app.use('/api', employeeRoute);
-// simple route
-// app.get("/", (req, res) => {
-//   res.json({message: "Welcome to Employee application."});
-// });
+
+// Setting up port with expressjs
 // Create port
-const port = process.env.PORT || 4000;
+console.log('port: ', process.env.API_PORT)
+const port = process.env.API_PORT || 4000;
 const server = app.listen(port, () => {
   console.log('Connected to port ' + port)
 });

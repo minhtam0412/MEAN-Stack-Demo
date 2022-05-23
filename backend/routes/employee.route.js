@@ -3,6 +3,7 @@ const app = express();
 const employeeRoute = express.Router();
 // Employee model
 let Employee = require('../models/Employee');
+
 // Add Employee
 employeeRoute.route('/create').post((req, res, next) => {
   Employee.create(req.body, (error, data) => {
@@ -13,6 +14,7 @@ employeeRoute.route('/create').post((req, res, next) => {
     }
   })
 });
+
 // Get All Employees
 employeeRoute.route('/').get((req, res) => {
   Employee.find((error, data) => {
@@ -23,6 +25,7 @@ employeeRoute.route('/').get((req, res) => {
     }
   })
 });
+
 // Get single employee
 employeeRoute.route('/read/:id').get((req, res) => {
   Employee.findById(req.params.id, (error, data) => {
@@ -48,6 +51,7 @@ employeeRoute.route('/update/:id').put((req, res, next) => {
     }
   })
 });
+
 // Delete employee
 employeeRoute.route('/delete/:id').delete((req, res, next) => {
   Employee.findOneAndRemove(req.params.id, (error, data) => {
