@@ -22,7 +22,7 @@ employeeRoute.route('/').get((req, res) => {
       res.json(data)
     }
   })
-})
+});
 // Get single employee
 employeeRoute.route('/read/:id').get((req, res) => {
   Employee.findById(req.params.id, (error, data) => {
@@ -32,7 +32,7 @@ employeeRoute.route('/read/:id').get((req, res) => {
       res.json(data)
     }
   })
-})
+});
 
 // Update employee
 employeeRoute.route('/update/:id').put((req, res, next) => {
@@ -40,14 +40,14 @@ employeeRoute.route('/update/:id').put((req, res, next) => {
     $set: req.body
   }, (error, data) => {
     if (error) {
+      console.log(error);
       return next(error);
-      console.log(error)
     } else {
-      res.json(data)
+      res.json(data);
       console.log('Data updated successfully')
     }
   })
-})
+});
 // Delete employee
 employeeRoute.route('/delete/:id').delete((req, res, next) => {
   Employee.findOneAndRemove(req.params.id, (error, data) => {
@@ -59,5 +59,5 @@ employeeRoute.route('/delete/:id').delete((req, res, next) => {
       })
     }
   })
-})
+});
 module.exports = employeeRoute;

@@ -1,5 +1,16 @@
-<nav>
-  <a routerLinkActive="active" routerLink="/employees-list">View Employees</a>
-  <a routerLinkActive="active" routerLink="/create-employee">Add Employee</a>
-</nav>
-<router-outlet></router-outlet>
+<div>
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a href="#" class="navbar-brand">Employee</a>
+    <div class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a routerLinkActive="active" routerLink="/employees-list">View Employees</a>
+      </li>
+      <li class="nav-item">
+        <a routerLinkActive="active" routerLink="/create-employee">Add Employee</a>
+      </li>
+    </div>
+  </nav>
+  <div class="container mt-3">
+    <router-outlet></router-outlet>
+  </div>
+</div>
