@@ -1,3 +1,4 @@
+//https://dev.to/suhailkakar/building-a-restful-crud-api-with-node-js-express-and-mongodb-1541
 const User = require('../models/user.model');
 
 exports.create = (req, res) => {
@@ -32,13 +33,62 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-
+  User.findById(req.params.userId).then((data) => {
+    if (!data) {
+      return res.status(400).send({
+        message: 'User not found with id ' + req.params.messageId
+      });
+    }
+    res.send(data);
+  }).catch(err => {
+    if (err.kind === "ObjectId") {
+      return res.status(404).send({
+        message: "User not found with id " + req.params.userId,
+      });
+    }
+    return res.status(500).send({
+      message: "Error retrieving User with id " + req.params.userId,
+    });
+  });
 };
 
 exports.update = (req, res) => {
-
+  User.findByIdAndUpdate(req.params.userId, {
+    email: req.body.email,
+    address: req.body.address ? req.body.address : null
+  }, {new: true}).then((data) => {
+    if (!data) {
+      return req.status(404).send({message: "User not found with id " + req.params.userId})
+    }
+    res.send(data);
+  }).catch(err => {
+    if (err.kind === "ObjectId") {
+      return res.status(404).send({
+        message: "User not found with id " + req.params.userId,
+      });
+    }
+    return res.status(500).send({
+      message: "Error updating User with id " + req.params.userId,
+    });
+  })
 };
 
 exports.delete = (req, res) => {
-
+  User.findByIdAndDelete(req.params.userId).then((data) => {
+    if (!data) {
+      return res.status(404).send({
+        message: "User not found with id " + req.params.userId,
+      });
+    }
+    res.send({message: "User deleted successfully!"});
+  }).catch(err => {
+    if (err.kind === "ObjectId" || err.name === "NotFound") {
+      return res.status(404).send({
+        message: "User not found with id " + req.params.userId,
+      });
+    }
+    return res.status(500).send({
+      message: "Could not delete User with id " + req.params.userId,
+    });
+  })
 };
