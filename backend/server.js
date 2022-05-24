@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -29,17 +30,18 @@ const camelcase = () => {
 };
 
 // Connecting with mongo db
-mongoose
-  .connect(DB_MONGO.url, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(DB_MONGO.url, {useNewUrlParser: true, useUnifiedTopology: true})
   .then((x) => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
   .catch((err) => {
-    console.error('Error connecting to Mongo', err.reason)
+    console.error('Error connecting to Mongo', err)
   });
 
+const authMiddle = require('./middleware/auth.middleware');
 const employeeRoute = require('../backend/routes/employee.route');
 const userRoute = require('../backend/routes/user.route');
+const authRoute = require('../backend/routes/auth.route');
 
 const app = express();
 // parse requests of content-type - application/json
@@ -59,12 +61,13 @@ app.use('/', express.static(path.join(__dirname, '../dist/mean-stack-crud-app'))
 
 app.use('/api', employeeRoute);
 userRoute(app);
+authRoute(app);
 
 // Create port
 const port = process.env.API_PORT || 4000;
 // Setting up port with expressjs
 const server = app.listen(port, () => {
-  console.log('Connected to port ' + port)
+  console.log(`Connected to port ${port}`)
 });
 // Find 404 and hand over to error handler
 app.use((req, res, next) => {

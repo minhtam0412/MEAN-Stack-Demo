@@ -1,15 +1,19 @@
 //https://dev.to/suhailkakar/building-a-restful-crud-api-with-node-js-express-and-mongodb-1541
 const User = require('../models/user.model');
+const bcrypt = require('bcryptjs')
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   if (!req.body) {
     return res.status(400).send({'message': 'Body can not be empty!'});
   }
+
+  const encryptPass = await bcrypt.hash(req.body.password, 10);
 
   const user = new User({
     userName: req.body.userName,
     email: req.body.email,
     address: req.body.address,
+    password: encryptPass
   });
 
   user.save().then(rsl => {
