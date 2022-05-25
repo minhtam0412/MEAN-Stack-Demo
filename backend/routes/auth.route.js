@@ -1,6 +1,7 @@
 module.exports = (app) => {
-  const User = require('../controllers/auth.controller');
+    const AuthCtrl = require('../controllers/auth.controller');
 
-  app.post('/register', User.register);
-  app.post('/login', User.login);
+    app.post('/register', AuthCtrl.register);
+    app.post('/login', AuthCtrl.login);
+    app.post('/refreshToken', AuthCtrl.refreshToken);
 }
