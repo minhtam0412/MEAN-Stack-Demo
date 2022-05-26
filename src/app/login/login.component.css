@@ -4,3 +4,11 @@
   background: scroll center url('https://source.unsplash.com/WEQbe2jBg40/414x512');
   background-size: cover;
 }
+
+.container {
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
