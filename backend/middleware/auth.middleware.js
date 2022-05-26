@@ -13,7 +13,7 @@ const catchError = (err, res) => {
 };
 
 const verifyToken = (req, res, next) => {
-  if (config.IS_NEED_AUTHEN.toString() === 'false') {
+  if (config.IS_REQUIRED_AUTHEN.toString() === 'false') {
     return next();
   }
   const token =
