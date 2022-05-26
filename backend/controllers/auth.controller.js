@@ -87,8 +87,6 @@ exports.login = async (req, res) => {
 }
 
 exports.verifyExpiration = (token) => {
-  console.log('verified', token.expiryDate.getTime())
-  console.log('Date', new Date().getTime())
   return token.expiryDate.getTime() < new Date().getTime();
 };
 
@@ -107,10 +105,9 @@ exports.refreshToken = async (req, res) => {
     if (this.verifyExpiration(refreshToken)) {
       await RefreshTokenModel.findByIdAndDelete(refreshToken._id);
 
-      res.status(403).json({
-        message: "Refresh token was expired. Please make a new signin request",
+      return res.status(403).json({
+        message: "Refresh token was expired. Please signin again!",
       });
-      return;
     }
     // user
     const user = await User.findById(refreshToken.userId);

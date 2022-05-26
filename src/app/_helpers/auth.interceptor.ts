@@ -33,7 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return this.handle401Error(authReq, next);
       }
       return throwError(error);
-    }))
+    }));
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {

@@ -43,7 +43,12 @@ export class AppComponent implements OnDestroy {
     this.showAdminBoard = false;
     this.showModeratorBoard = false;
 
-    this.router.navigate(['/']);
+    //redirect to home when current page is login
+    if (window.location.href.includes('login')) {
+      this.router.navigate(['/'])
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   ngOnDestroy(): void {
