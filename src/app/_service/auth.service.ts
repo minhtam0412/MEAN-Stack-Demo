@@ -28,4 +28,10 @@ export class AuthService {
       password
     }, httpOptions);
   }
+
+  refreshToken(refreshToken: string) {
+    return this.http.post(AUTH_API + 'refreshToken', {
+      refreshToken: refreshToken
+    }, httpOptions);
+  }
 }
