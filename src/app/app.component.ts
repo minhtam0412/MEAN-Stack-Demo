@@ -2,6 +2,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {TokenStorageService} from './_service/token-storage.service';
 import {EventBusService} from "./_shared/event-bus.service";
 import {Subscription} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -9,26 +10,26 @@ import {Subscription} from "rxjs";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnDestroy {
-  title = 'mean-stack-crud-app';
 
-  private roles: string[] = [];
+  private roles: any[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
   eventBusSub?: Subscription;
 
-  constructor(private tokenStorageService: TokenStorageService, private eventBusService: EventBusService) {
+  constructor(private tokenStorageService: TokenStorageService, private eventBusService: EventBusService,
+              private router: Router, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
-      // this.roles = user.roles;
-      // this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      // this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
-      this.username = user.username;
+      this.roles = user.roles;
+      this.showAdminBoard = this.roles.map(x => x.name).includes('admin');
+      this.showModeratorBoard = this.roles.map(x => x.name).includes('moderator');
+      this.username = user.userName;
     }
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
@@ -41,6 +42,8 @@ export class AppComponent implements OnDestroy {
     this.roles = [];
     this.showAdminBoard = false;
     this.showModeratorBoard = false;
+
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy(): void {

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../_service/auth.service';
-import { TokenStorageService } from '../_service/token-storage.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../_service/auth.service';
+import {TokenStorageService} from '../_service/token-storage.service';
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-login',
@@ -9,22 +10,26 @@ import { TokenStorageService } from '../_service/token-storage.service';
 })
 export class LoginComponent implements OnInit {
   form: any = {
-    username: null,
-    password: null
+    username: environment.userName,
+    password: environment.password
   };
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  roles: string[] = [];
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  roles: any[] = [];
+
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) {
+  }
+
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
     }
   }
+
   onSubmit(): void {
-    const { username, password } = this.form;
+    const {username, password} = this.form;
     this.authService.login(username, password).subscribe(
       data => {
         this.tokenStorage.saveToken(data.token);
@@ -41,6 +46,7 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
   reloadPage(): void {
     window.location.reload();
   }

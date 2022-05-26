@@ -15,16 +15,15 @@ export class BoardUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUserBoard().subscribe(
-      data => {
-        console.log("-> data", data);
-      },
-      err => {
+    this.userService.getUserBoard().subscribe({
+      next: ((data) => {
+        this.content = data;
+      }),
+      error: err => {
         this.content = err.error.message || err.error || err.message;
         if (err.status === 403)
           this.eventBusService.emit(new EventData('logout', null));
       }
-    );
+    });
   }
-
 }

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {UserService} from "../_service/user.service";
+import {EventBusService} from "../_shared/event-bus.service";
+import {EventData} from "../_shared/event.class";
 
 @Component({
   selector: 'app-board-moderator',
@@ -6,10 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./board-moderator.component.css']
 })
 export class BoardModeratorComponent implements OnInit {
+  content?: string;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private userService: UserService, private eventBusService: EventBusService) {
   }
 
+  ngOnInit(): void {
+    this.userService.getModeratorBoard().subscribe({
+      next: ((data) => {
+        this.content = data;
+      }),
+      error: err => {
+        this.content = err.error.message || err.error || err.message;
+        if (err.status === 403)
+          this.eventBusService.emit(new EventData('logout', null));
+      }
+    });
+  }
 }

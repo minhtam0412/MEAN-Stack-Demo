@@ -20,7 +20,7 @@ const verifyToken = (req, res, next) => {
     req.body.token || req.query.token || req.headers["x-access-token"];
 
   if (!token) {
-    return res.status(403).send({message: 'A token is required for authentication'});
+    return res.status(403).send({message: 'No token provided. A token is required for authentication'});
   }
   try {
     jwt.verify(token, config.TOKEN_KEY, (err, decoded) => {
@@ -38,7 +38,7 @@ const verifyToken = (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
   if (!req.user) {
-    return res.status(401).send({message: 'User not found from request!'});
+    return res.status(401).send({message: 'Request is not authenticated! Not found user info!'});
   }
   User.findOne({_id: req.user.userId}).exec((error, user) => {
     if (error) {
@@ -55,10 +55,36 @@ const isAdmin = (req, res, next) => {
             return;
           }
         }
+        return res.status(403).send({message: 'Require Admin role!'});
       }
     });
   });
 };
-const authJwt = {verifyToken, isAdmin};
+
+const isModerator = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).send({message: 'Request is not authenticated! Not found user info!'});
+  }
+  User.findOne({_id: req.user.userId}).exec((error, user) => {
+    if (error) {
+      return res.status(500).send({message: error.message});
+    }
+    Role.find({_id: {$in: user.roles}}, (err, roles) => {
+      if (err) {
+        return res.status(500).send({message: err.message});
+      }
+      if (roles && roles.length > 0) {
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].name === 'moderator') {
+            next();
+            return;
+          }
+        }
+        return res.status(403).send({message: 'Require Moderator role!'});
+      }
+    });
+  });
+}
+const authJwt = {verifyToken, isAdmin, isModerator};
 
 module.exports = authJwt;

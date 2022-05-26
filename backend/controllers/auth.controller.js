@@ -64,7 +64,7 @@ exports.login = async (req, res) => {
     if (!(email && password)) {
       return res.status(400).send({message: "All input is required"});
     }
-    const user = await User.findOne({email}).populate('roles', 'name');
+    const user = await User.findOne({$or: [{email}, {userName: email}]}).populate('roles', 'name');
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
       const token = jwt.sign({userId: user.id, email},
