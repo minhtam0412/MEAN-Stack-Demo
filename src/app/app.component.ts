@@ -55,4 +55,8 @@ export class AppComponent implements OnDestroy {
     if (this.eventBusSub)
       this.eventBusSub.unsubscribe();
   }
+
+  openNewTab() {
+    window.open('/profile', '_blank');
+  }
 }

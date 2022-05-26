@@ -47,11 +47,11 @@ exports.createRefreshToken = (user) => {
   let expiredAt = new Date();
   expiredAt.setSeconds(expiredAt.getSeconds() + config.jwtRefreshExpiration);
 
-  console.log('createRefreshToken', expiredAt.getTime())
   let _token = uuidv4();
   let refreshToken = new RefreshTokenModel({
     token: _token,
     userId: user.id,
+    user: user.id,
     expiryDate: expiredAt
   });
   return refreshToken;
@@ -81,8 +81,9 @@ exports.login = async (req, res) => {
       return res.status(200).json(user);
     }
     res.status(400).send({message: "Invalid Credentials"});
-  } catch (e) {
-    console.log(e)
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({message: err.message});
   }
 }
 

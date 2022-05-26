@@ -18,14 +18,14 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + '/login', {
+    return this.http.post(AUTH_API + '/api/auth/login', {
       email,
       password
     }, httpOptions);
   }
 
   register(userName: string, email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + '/register', {
+    return this.http.post(AUTH_API + '/api/auth/register', {
       userName,
       email,
       password
@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   refreshToken(refreshToken: string) {
-    return this.http.post(AUTH_API + '/refreshToken', {
+    return this.http.post(AUTH_API + '/api/auth/refreshToken', {
       refreshToken: refreshToken
     }, httpOptions);
   }
