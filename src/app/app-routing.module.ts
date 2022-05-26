@@ -10,6 +10,7 @@ import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {ProfileComponent} from './profile/profile.component';
 import {RegisterComponent} from './register/register.component';
+import {AuthGuard} from "./_helpers/auth.guard";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -21,9 +22,9 @@ const routes: Routes = [
   {path: 'admin', component: BoardAdminComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
 
-  {path: 'create-employee', component: EmployeeCreateComponent},
-  {path: 'edit-employee/:id', component: EmployeeEditComponent},
-  {path: 'employees-list', component: EmployeeListComponent}
+  {path: 'create-employee', component: EmployeeCreateComponent, canActivate: [AuthGuard]},
+  {path: 'edit-employee/:id', component: EmployeeEditComponent, canActivate: [AuthGuard]},
+  {path: 'employees-list', component: EmployeeListComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

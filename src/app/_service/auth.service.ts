@@ -37,4 +37,8 @@ export class AuthService {
       refreshToken: refreshToken
     }, httpOptions);
   }
+
+  signout() {
+    return this.http.post(AUTH_API + '/api/auth/logout', {}, httpOptions);
+  }
 }

@@ -11,10 +11,10 @@ export class EmployeeListComponent implements OnInit {
   Employee: any = [];
 
   constructor(private apiService: ApiService) {
-    this.readEmployee();
   }
 
   ngOnInit() {
+    this.readEmployee();
   }
 
 

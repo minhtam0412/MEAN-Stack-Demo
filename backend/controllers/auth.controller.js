@@ -99,15 +99,17 @@ exports.refreshToken = async (req, res) => {
 
   try {
     let refreshToken = await RefreshTokenModel.findOne({token: requestToken});
+
     if (!refreshToken) {
       res.status(403).json({message: "Refresh token is not in database!"});
       return;
     }
+
     if (this.verifyExpiration(refreshToken)) {
       await RefreshTokenModel.findByIdAndDelete(refreshToken._id);
 
       return res.status(403).json({
-        message: "Refresh token was expired. Please signin again!",
+        message: "Refresh token was expired and removed from database. Please signin again!",
       });
     }
     // user
@@ -116,8 +118,7 @@ exports.refreshToken = async (req, res) => {
       const token = jwt.sign({userId: user._id, email: user.email},
         process.env.TOKEN_KEY, {
           expiresIn: config.jwtExpiration
-        }
-      );
+        });
       // save refresh token
       const refreshToken = await RefreshTokenModel.create(this.createRefreshToken(user));
 
@@ -129,5 +130,14 @@ exports.refreshToken = async (req, res) => {
     console.log(user)
   } catch (err) {
     return res.status(500).send({message: err});
+  }
+}
+
+exports.logout = (req, res, next) => {
+  try {
+    req.user = null;
+    res.status(200).send({message: `You've been signed out!`})
+  } catch (err) {
+    next(err);
   }
 }

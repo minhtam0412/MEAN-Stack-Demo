@@ -21,8 +21,10 @@ export class BoardModeratorComponent implements OnInit {
       }),
       error: err => {
         this.content = err.error.message || err.error || err.message;
-        if (err.status === 403)
-          this.eventBusService.emit(new EventData('logout', null));
+        if (err.status === 403) {
+          console.log('xxxx')
+          this.eventBusService.emit(new EventData('logout', true));
+        }
       }
     });
   }

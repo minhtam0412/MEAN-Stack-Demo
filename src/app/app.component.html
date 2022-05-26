@@ -28,10 +28,11 @@
     </ul>
     <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
       <li class="nav-item">
-        <a href="javascript:void(0)" class="nav-link" routerLink="profile">Login user: {{username}}</a>
+        <a href="javascript:void(0)" class="nav-link" routerLink="profile">Login user: {{user.userName}} |
+          Email: {{user.email}}</a>
       </li>
       <li class="nav-item">
-        <a href="javascript:void(0)" class="nav-link" (click)="logout()">Logout</a>
+        <a href="javascript:void(0)" class="nav-link" (click)="logout(true)">Logout</a>
       </li>
     </ul>
   </nav>

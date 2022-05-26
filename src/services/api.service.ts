@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {HttpClient, HttpErrorResponse, HttpHeaders,} from '@angular/common/http';
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  baseUri: string = 'http://localhost:4000/api';
+  baseUri: string = `${environment.API_URL}/api`;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http: HttpClient) {

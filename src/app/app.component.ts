@@ -2,7 +2,8 @@ import {Component, OnDestroy} from '@angular/core';
 import {TokenStorageService} from './_service/token-storage.service';
 import {EventBusService} from "./_shared/event-bus.service";
 import {Subscription} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
+import {AuthService} from "./_service/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -17,9 +18,11 @@ export class AppComponent implements OnDestroy {
   showModeratorBoard = false;
   username?: string;
   eventBusSub?: Subscription;
+  user: any;
 
   constructor(private tokenStorageService: TokenStorageService, private eventBusService: EventBusService,
-              private router: Router, private activatedRoute: ActivatedRoute) {
+              private router: Router, private storageService: TokenStorageService) {
+    this.user = this.storageService.userValue;
   }
 
   ngOnInit(): void {
@@ -32,11 +35,11 @@ export class AppComponent implements OnDestroy {
       this.username = user.userName;
     }
     this.eventBusSub = this.eventBusService.on('logout', () => {
-      this.logout();
+      this.logout(true);
     });
   }
 
-  logout(): void {
+  logout(isNotIncludeReturnUrl: boolean): void {
     this.tokenStorageService.signOut();
     this.isLoggedIn = false;
     this.roles = [];
@@ -45,9 +48,13 @@ export class AppComponent implements OnDestroy {
 
     //redirect to home when current page is login
     if (window.location.href.includes('login')) {
-      this.router.navigate(['/'])
+      this.router.navigate(['/']);
     } else {
-      this.router.navigate(['/login']);
+      if (isNotIncludeReturnUrl) {
+        this.router.navigate(['/login']);
+      } else {
+        this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.routerState.snapshot.url}});
+      }
     }
   }
 
