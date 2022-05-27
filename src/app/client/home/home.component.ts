@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../_service/user.service';
-import {EventData} from "../_shared/event.class";
-import {EventBusService} from "../_shared/event-bus.service";
+import {UserService} from '../../_service/user.service';
+import {EventData} from "../../_shared/event.class";
+import {EventBusService} from "../../_shared/event-bus.service";
 import {Subscription} from "rxjs";
-import {TokenStorageService} from "../_service/token-storage.service";
+import {TokenStorageService} from "../../_service/token-storage.service";
 import {Router} from "@angular/router";
 
 @Component({

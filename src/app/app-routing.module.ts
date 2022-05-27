@@ -5,8 +5,8 @@ import {RegisterComponent} from './register/register.component';
 
 const routes: Routes = [
   {
-    path: '', loadChildren: () => import('../app/blog/blog.module').then(m => {
-      return m.BlogModule
+    path: '', loadChildren: () => import('./client/client.module').then(m => {
+      return m.ClientModule
     })
   },
   {
@@ -17,12 +17,8 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
 
-
   // {path: 'mod', component: BoardModeratorComponent, canActivate: [AuthGuard]},
   // {path: 'admin', component: BoardAdminComponent, canActivate: [AuthGuard]},
-
-
-
 ];
 
 @NgModule({

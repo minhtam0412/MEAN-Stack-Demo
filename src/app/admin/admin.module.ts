@@ -9,6 +9,7 @@ import {FooterComponent} from "../components/main/footer/footer.component";
 import {MenuComponent} from "../components/main/menu/menu.component";
 import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {fas} from "@fortawesome/free-solid-svg-icons";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
