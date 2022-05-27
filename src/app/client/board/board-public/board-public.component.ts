@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EventData} from "../../../_shared/event.class";
 import {UserService} from "../../../_service/user.service";
-import {EventBusService} from "../../../_shared/event-bus.service";
 
 @Component({
   selector: 'app-board-public',
