@@ -7,3 +7,6 @@
 [Login with Nodejs](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)
 
 [Refresh Token Nodejs](https://www.bezkoder.com/jwt-refresh-token-node-js-mongodb/)
+
+
+[Validate form](https://www.bezkoder.com/angular-13-form-validation/#Angular_13_Confirm_Password_validation)
