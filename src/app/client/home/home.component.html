@@ -6,16 +6,16 @@
         <a href="/home" class="nav-link" routerLink="/">Home </a>
       </li>
       <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="home/admin" class="nav-link" routerLink="admin">Admin Board</a>
+        <a href="home/admin" class="nav-link" routerLink="/board/admin">Admin Board</a>
       </li>
       <li class="nav-item" *ngIf="showModeratorBoard">
-        <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>
+        <a href="/mod" class="nav-link" routerLink="/board/mod">Moderator Board</a>
       </li>
       <li class="nav-item">
-        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User Board</a>
+        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="/board/user">User Board</a>
       </li>
       <li class="nav-item">
-        <a href="/home/profile" target="_blank" class="nav-link" (click)="openProfileInNewTab()" *ngIf="isLoggedIn">Profile
+        <a href="javascript:void(0)" class="nav-link" (click)="openProfileInNewTab()" *ngIf="isLoggedIn">Profile
           in
           new tab</a>
       </li>
@@ -33,7 +33,7 @@
     </ul>
     <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
       <li class="nav-item">
-        <a href="javascript:void(0)" class="nav-link" routerLink="profile">Login user: {{user.userName}} |
+        <a href="javascript:void(0)" class="nav-link" routerLink="/home/profile">Login user: {{user.userName}} |
           Email: {{user.email}}</a>
       </li>
       <li class="nav-item">

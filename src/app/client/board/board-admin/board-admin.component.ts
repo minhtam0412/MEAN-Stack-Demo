@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../_service/user.service';
-import {EventBusService} from "../_shared/event-bus.service";
-import {EventData} from "../_shared/event.class";
+import {UserService} from '../../../_service/user.service';
+import {EventBusService} from "../../../_shared/event-bus.service";
+import {EventData} from "../../../_shared/event.class";
 
 @Component({
   selector: 'app-board-admin',

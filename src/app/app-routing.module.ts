@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
+import {AuthGuard} from "./_helpers/auth.guard";
 
 const routes: Routes = [
   {
@@ -10,19 +11,18 @@ const routes: Routes = [
     })
   },
   {
-    path: 'administrator', loadChildren: () => import('../app/admin/admin.module').then(m => {
+    path: 'administrator'
+    , loadChildren: () => import('../app/admin/admin.module').then(m => {
       return m.AdminModule
     })
+    , canActivate: [AuthGuard]
   },
   {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
-
-  // {path: 'mod', component: BoardModeratorComponent, canActivate: [AuthGuard]},
-  // {path: 'admin', component: BoardAdminComponent, canActivate: [AuthGuard]},
+  {path: 'register', component: RegisterComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload', scrollPositionRestoration: 'enabled'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
