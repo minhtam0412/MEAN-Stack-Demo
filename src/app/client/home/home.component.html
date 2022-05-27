@@ -6,13 +6,13 @@
         <a href="/home" class="nav-link" routerLink="/">Home </a>
       </li>
       <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="home/admin" class="nav-link" routerLink="/board/admin">Admin Board</a>
+        <a href="/admin" class="nav-link" routerLink="/home/admin">Admin Board</a>
       </li>
       <li class="nav-item" *ngIf="showModeratorBoard">
-        <a href="/mod" class="nav-link" routerLink="/board/mod">Moderator Board</a>
+        <a href="/mod" class="nav-link" routerLink="/home/mod">Moderator Board</a>
       </li>
       <li class="nav-item">
-        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="/board/user">User Board</a>
+        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="/home/user">User Board</a>
       </li>
       <li class="nav-item">
         <a href="javascript:void(0)" class="nav-link" (click)="openProfileInNewTab()" *ngIf="isLoggedIn">Profile

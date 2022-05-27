@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {AuthGuard} from "./_helpers/auth.guard";
+import {AdminDashboardComponent} from "./admin/admin-dashboard/admin-dashboard.component";
 
 const routes: Routes = [
   {
@@ -11,11 +12,11 @@ const routes: Routes = [
     })
   },
   {
-    path: 'administrator'
-    , loadChildren: () => import('../app/admin/admin.module').then(m => {
+    path: 'administrator',
+    component: AdminDashboardComponent,
+    loadChildren: () => import('../app/admin/admin.module').then(m => {
       return m.AdminModule
-    })
-    , canActivate: [AuthGuard]
+    }), canActivate: [AuthGuard]
   },
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent}

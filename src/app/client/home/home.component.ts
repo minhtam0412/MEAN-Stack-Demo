@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('HomeComponent -> ngOnInit')
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
@@ -62,6 +63,6 @@ export class HomeComponent implements OnInit {
   }
 
   openProfileInNewTab() {
-    window.open('/home/profile','_blank');
+    window.open('/home/profile', '_blank');
   }
 }
