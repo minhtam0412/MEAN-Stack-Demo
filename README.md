@@ -9,3 +9,5 @@
 [Refresh Token Nodejs](https://www.bezkoder.com/jwt-refresh-token-node-js-mongodb/)
 
 [Validate form](https://www.bezkoder.com/angular-13-form-validation/#Angular_13_Confirm_Password_validation)
+
+[Angular Folder Structure Best Practices](https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/#feature-modules-2)

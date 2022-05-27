@@ -1,5 +1,46 @@
-<div class="container">
-    <header class="jumbotron">
-        <p>{{ content }}</p>
-    </header>
+<div id="app">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a href="javascript:void(0)" routerLink="/" class="navbar-brand">MEAN Stack Client App</a>
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item">
+        <a href="/home" class="nav-link" routerLink="/">Home </a>
+      </li>
+      <li class="nav-item" *ngIf="showAdminBoard">
+        <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>
+      </li>
+      <li class="nav-item" *ngIf="showModeratorBoard">
+        <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>
+      </li>
+      <li class="nav-item">
+        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User Board</a>
+      </li>
+      <li class="nav-item">
+        <a href="/home/profile" target="_blank" class="nav-link" (click)="openProfileInNewTab()" *ngIf="isLoggedIn">Profile in
+          new tab</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a href="/administrator" class="nav-link" routerLink="/administrator">Admin App</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+      <li class="nav-item">
+        <a href="/register" class="nav-link" routerLink="/register">Register</a>
+      </li>
+      <li class="nav-item">
+        <a href="/login" class="nav-link" routerLink="/login">Login</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+      <li class="nav-item">
+        <a href="javascript:void(0)" class="nav-link" routerLink="profile">Login user: {{user.userName}} |
+          Email: {{user.email}}</a>
+      </li>
+      <li class="nav-item">
+        <a href="javascript:void(0)" class="nav-link" (click)="logout(true)">Logout</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </div>

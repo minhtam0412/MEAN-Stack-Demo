@@ -3,7 +3,6 @@ import {TokenStorageService} from './_service/token-storage.service';
 import {EventBusService} from "./_shared/event-bus.service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
-import {AuthService} from "./_service/auth.service";
 
 @Component({
   selector: 'app-root',

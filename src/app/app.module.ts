@@ -16,9 +16,6 @@ import {BoardAdminComponent} from './board-admin/board-admin.component';
 import {BoardModeratorComponent} from './board-moderator/board-moderator.component';
 import {BoardUserComponent} from './board-user/board-user.component';
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
-import {FooterComponent} from './components/main/footer/footer.component';
-import {HeaderComponent} from './components/main/header/header.component';
-import {MenuComponent} from './components/main/menu/menu.component';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {fas} from "@fortawesome/free-solid-svg-icons";
 
@@ -35,9 +32,6 @@ import {fas} from "@fortawesome/free-solid-svg-icons";
     BoardAdminComponent,
     BoardModeratorComponent,
     BoardUserComponent,
-    FooterComponent,
-    HeaderComponent,
-    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +42,8 @@ import {fas} from "@fortawesome/free-solid-svg-icons";
     FontAwesomeModule,
   ],
   providers: [authInterceptorProviders],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

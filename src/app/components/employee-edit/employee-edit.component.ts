@@ -88,7 +88,7 @@ export class EmployeeEditComponent implements OnInit {
         let id = this.actRoute.snapshot.paramMap.get('id');
         this.apiService.updateEmployee(id, this.editForm.value).subscribe({
           complete: () => {
-            this.router.navigateByUrl('/employees-list');
+            this.router.navigateByUrl('/administrator/employee/employees-list');
             console.log('Content updated successfully!');
             return true;
           },

@@ -1,1 +1,12 @@
-<p>admin-dashboard works!</p>
+<div class="sb-nav-fixed">
+  <app-header></app-header>
+  <div id="layoutSidenav">
+    <app-menu></app-menu>
+    <div id="layoutSidenav_content">
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+      <app-footer></app-footer>
+    </div>
+  </div>
+</div>

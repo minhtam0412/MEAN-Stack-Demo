@@ -16,5 +16,4 @@ export class MenuComponent implements OnInit {
   closeMenu() {
     document.body.classList.toggle('sb-sidenav-toggled');
   }
-
 }

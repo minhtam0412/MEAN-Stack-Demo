@@ -21,7 +21,7 @@
       <td>{{employee.designation}}</td>
       <td>{{employee.phoneNumber}}</td>
       <td class="text-center edit-block">
-          <span class="edit" [routerLink]="['/edit-employee/', employee._id]">
+          <span class="edit" [routerLink]="['/administrator/employee/edit-employee/', employee._id]">
             <button type="button" class="btn btn-success btn-sm">Edit</button>
           </span>
         <span class="delete" (click)="removeEmployee(employee, i)">
