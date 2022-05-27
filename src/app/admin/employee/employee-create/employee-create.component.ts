@@ -55,14 +55,12 @@ export class EmployeeCreateComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log("-> this.employeeForm.value", this.employeeForm.value);
     if (!this.employeeForm?.valid) {
       return false;
     } else {
       return this.apiService.createEmployee(this.employeeForm.value).subscribe({
         complete: () => {
-          console.log('Employee successfully created!'),
-            this.ngZone.run(() => this.router.navigateByUrl('/employees-list'));
+            this.ngZone.run(() => this.router.navigateByUrl('/administrator/employee/employee-list'));
         },
         error: (e) => {
           console.log(e);

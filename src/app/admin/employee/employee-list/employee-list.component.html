@@ -2,7 +2,7 @@
   <div class="mb-3 gap-2 d-flex">
     <button type="button" class="btn btn-primary" routerLink="/administrator/employee/create-employee">Create new
     </button>
-    <button type="button" class="btn btn-success">Search</button>
+    <button type="button" class="btn btn-success" (click)="loadData()">Search</button>
   </div>
   <!-- No data message -->
   <p *ngIf="Employee.length <= 0" class="no-data text-center">There is no employee added yet!</p>
@@ -25,7 +25,7 @@
       <td>{{employee.email}}</td>
       <td>{{employee.designation}}</td>
       <td>{{employee.phoneNumber}}</td>
-      <td class="text-center edit-block">
+      <td class="text-center edit-block d-flex gap-2 justify-content-center">
           <span class="edit" [routerLink]="['/administrator/employee/edit-employee/', employee._id]">
             <button type="button" class="btn btn-success btn-sm">Edit</button>
           </span>

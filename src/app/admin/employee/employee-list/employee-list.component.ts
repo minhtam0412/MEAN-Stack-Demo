@@ -14,11 +14,11 @@ export class EmployeeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.readEmployee();
+    this.loadData();
   }
 
 
-  readEmployee() {
+  loadData() {
     this.apiService.getEmployees().subscribe((data) => {
       this.Employee = data;
     })
