@@ -16,6 +16,11 @@ import {BoardAdminComponent} from './board-admin/board-admin.component';
 import {BoardModeratorComponent} from './board-moderator/board-moderator.component';
 import {BoardUserComponent} from './board-user/board-user.component';
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
+import {FooterComponent} from './components/main/footer/footer.component';
+import {HeaderComponent} from './components/main/header/header.component';
+import {MenuComponent} from './components/main/menu/menu.component';
+import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {fas} from "@fortawesome/free-solid-svg-icons";
 
 @NgModule({
   declarations: [
@@ -29,17 +34,24 @@ import {authInterceptorProviders} from './_helpers/auth.interceptor';
     ProfileComponent,
     BoardAdminComponent,
     BoardModeratorComponent,
-    BoardUserComponent
+    BoardUserComponent,
+    FooterComponent,
+    HeaderComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas);
+  }
 }

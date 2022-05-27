@@ -13,6 +13,11 @@ import {RegisterComponent} from './register/register.component';
 import {AuthGuard} from "./_helpers/auth.guard";
 
 const routes: Routes = [
+  {
+    path: 'administrator', loadChildren: () => import('../app/admin/admin.module').then(m => {
+      return m.AdminModule
+    })
+  },
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
@@ -24,7 +29,7 @@ const routes: Routes = [
 
   {path: 'create-employee', component: EmployeeCreateComponent, canActivate: [AuthGuard]},
   {path: 'edit-employee/:id', component: EmployeeEditComponent, canActivate: [AuthGuard]},
-  {path: 'employees-list', component: EmployeeListComponent, canActivate: [AuthGuard]}
+  {path: 'employees-list', component: EmployeeListComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
