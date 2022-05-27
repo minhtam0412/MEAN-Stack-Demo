@@ -11,28 +11,13 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnDestroy {
 
-  private roles: any[] = [];
-  isLoggedIn = false;
-  showAdminBoard = false;
-  showModeratorBoard = false;
-  username?: string;
   eventBusSub?: Subscription;
-  user: any;
 
   constructor(private tokenStorageService: TokenStorageService, private eventBusService: EventBusService,
               private router: Router, private storageService: TokenStorageService) {
-    this.user = this.storageService.userValue;
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
-    if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
-      this.showAdminBoard = this.roles.map(x => x.name).includes('admin');
-      this.showModeratorBoard = this.roles.map(x => x.name).includes('moderator');
-      this.username = user.userName;
-    }
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout(true);
     });
@@ -40,10 +25,6 @@ export class AppComponent implements OnDestroy {
 
   logout(isNotIncludeReturnUrl: boolean): void {
     this.tokenStorageService.signOut();
-    this.isLoggedIn = false;
-    this.roles = [];
-    this.showAdminBoard = false;
-    this.showModeratorBoard = false;
 
     //redirect to home when current page is login
     if (window.location.href.includes('login')) {
@@ -60,9 +41,5 @@ export class AppComponent implements OnDestroy {
   ngOnDestroy(): void {
     if (this.eventBusSub)
       this.eventBusSub.unsubscribe();
-  }
-
-  openNewTab() {
-    window.open('/profile', '_blank');
   }
 }

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {TokenStorageService} from "../../../_service/token-storage.service";
 
 @Component({
   selector: 'app-menu',
@@ -7,7 +8,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() {
+  user: any;
+
+  constructor(private storageService: TokenStorageService) {
+    this.user = this.storageService.userValue;
   }
 
   ngOnInit(): void {

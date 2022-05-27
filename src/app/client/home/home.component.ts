@@ -3,6 +3,8 @@ import {EventBusService} from "../../_shared/event-bus.service";
 import {Subscription} from "rxjs";
 import {TokenStorageService} from "../../_service/token-storage.service";
 import {Router} from "@angular/router";
+import {EventData} from "../../_shared/event.class";
+import {UserService} from "../../_service/user.service";
 
 @Component({
   selector: 'app-home',
@@ -15,8 +17,8 @@ export class HomeComponent implements OnInit {
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
-  eventBusSub?: Subscription;
   user: any;
+  content: string = '';
 
   constructor(private tokenStorageService: TokenStorageService, private eventBusService: EventBusService,
               private router: Router, private storageService: TokenStorageService) {
@@ -33,9 +35,6 @@ export class HomeComponent implements OnInit {
       this.showModeratorBoard = this.roles.map(x => x.name).includes('moderator');
       this.username = user.userName;
     }
-    this.eventBusSub = this.eventBusService.on('logout', () => {
-      this.logout(true);
-    });
   }
 
   logout(isNotIncludeReturnUrl: boolean): void {
@@ -55,11 +54,6 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.routerState.snapshot.url}});
       }
     }
-  }
-
-  ngOnDestroy(): void {
-    if (this.eventBusSub)
-      this.eventBusSub.unsubscribe();
   }
 
   openProfileInNewTab() {

@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {TokenStorageService} from "../../../_service/token-storage.service";
+import {EventBusService} from "../../../_shared/event-bus.service";
+import {EventData} from "../../../_shared/event.class";
 
 @Component({
   selector: 'app-header',
@@ -7,7 +10,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() {
+  constructor(private eventBusService: EventBusService) {
   }
 
   ngOnInit(): void {
@@ -19,5 +22,9 @@ export class HeaderComponent implements OnInit {
       document.body.classList.toggle('sb-sidenav-toggled');
       localStorage.setItem('sb|sidebar-toggle', String(document.body.classList.contains('sb-sidenav-toggled')));
     }
+  }
+
+  logOut() {
+    this.eventBusService.emit(new EventData('logout', true));
   }
 }
