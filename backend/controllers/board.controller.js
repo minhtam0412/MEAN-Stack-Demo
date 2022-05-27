@@ -1,5 +1,5 @@
 exports.allAccess = (req, res) => {
-  res.status(200).send(`Public content. Every one can see, not require login`);
+  res.status(200).send(`Public content. Everyone can see, not require login`);
 };
 
 exports.userBoard = (req, res) => {
