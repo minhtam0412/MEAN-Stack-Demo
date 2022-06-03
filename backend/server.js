@@ -10,6 +10,8 @@ const omitEmpty = require('omit-empty');
 const camelcaseKeys = require('camelcase-keys');
 const DB_MONGO = require('../backend/config/db.config');
 const Role = require('../backend/models/role.model');
+const schema = require('../backend/schema/schema');
+const createError = require('http-errors');
 
 const corsOptions = {
   origin: ['http://localhost:4200', 'http://localhost:4300'],
@@ -45,16 +47,15 @@ const authMiddle = require('./middleware/auth.middleware');
 const employeeRoute = require('../backend/routes/employee.route');
 const userRoute = require('../backend/routes/user.route');
 const authRoute = require('../backend/routes/auth.route');
+const {graphqlHTTP} = require("express-graphql");
 
 const app = express();
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(
-  bodyParser.urlencoded({
-    extended: false,
-  }),
-);
+app.use(bodyParser.urlencoded({
+  extended: false,
+}),);
 app.use(removeEmptyProperties());
 app.use(camelcase());
 app.use(logger('dev'));
@@ -65,6 +66,9 @@ app.use('/api', employeeRoute);
 userRoute(app);
 authRoute(app);
 require('../backend/routes/board.route')(app);
+app.use("/graphql", graphqlHTTP({
+  schema: schema, graphiql: true,
+}));
 
 // Create port
 const port = process.env.API_PORT || 4000;
@@ -107,7 +111,6 @@ function initData() {
         }
         console.log("added 'admin' to roles collection");
       });
-
     }
   })
 }

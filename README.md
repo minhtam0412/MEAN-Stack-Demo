@@ -11,3 +11,5 @@
 [Validate form](https://www.bezkoder.com/angular-13-form-validation/#Angular_13_Confirm_Password_validation)
 
 [Angular Folder Structure Best Practices](https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/#feature-modules-2)
+
+[GraphQL](https://www.section.io/engineering-education/build-a-graphql-server-using-nodejs/)
