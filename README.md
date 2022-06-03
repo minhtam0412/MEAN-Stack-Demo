@@ -13,3 +13,6 @@
 [Angular Folder Structure Best Practices](https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/#feature-modules-2)
 
 [GraphQL](https://www.section.io/engineering-education/build-a-graphql-server-using-nodejs/)
+
+
+[Graphql Expres](https://javascript.plainenglish.io/graphql-express-mongo-backend-d41625f728bf)

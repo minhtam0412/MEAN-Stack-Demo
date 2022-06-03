@@ -10,7 +10,9 @@ const omitEmpty = require('omit-empty');
 const camelcaseKeys = require('camelcase-keys');
 const DB_MONGO = require('../backend/config/db.config');
 const Role = require('../backend/models/role.model');
-const schema = require('../backend/schema/schema');
+const schema = require('./graphql/schema');
+const schemaProduct = require('./graphql/product.schema');
+const resolver = require('../backend/graphql/resolvers');
 const createError = require('http-errors');
 
 const corsOptions = {
@@ -66,6 +68,9 @@ app.use('/api', employeeRoute);
 userRoute(app);
 authRoute(app);
 require('../backend/routes/board.route')(app);
+app.use("/graphql/product", graphqlHTTP({
+  schema: schemaProduct, rootValue: resolver, graphiql: true,
+}));
 app.use("/graphql", graphqlHTTP({
   schema: schema, graphiql: true,
 }));
