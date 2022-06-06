@@ -1,13 +1,14 @@
 const {buildSchema} = require('graphql');
 
-module.exports = buildSchema(`
-type Product {
+const typeProduct = `type Product {
   _id: ID!
   name: String!
   description: String!
   price: Float!
   discount: Int
-}
+}`;
+
+const typeAll = `
 
 input ProductInputData {
   name: String!
@@ -32,4 +33,6 @@ schema {
   query: RootQuery,
   mutation: RootMutation
 }
-`);
+`;
+
+module.exports = buildSchema(typeProduct + typeAll);
