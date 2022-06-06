@@ -14,7 +14,7 @@
 
 [GraphQL](https://www.section.io/engineering-education/build-a-graphql-server-using-nodejs/)
 
-[Graphql Express](https://javascript.plainenglish.io/graphql-express-mongo-backend-d41625f728bf)
+[Graphql Express with Docker](https://javascript.plainenglish.io/graphql-express-mongo-backend-d41625f728bf)
 
 [express-graphql-boilerplate](https://github.com/aichbauer/express-graphql-boilerplate#install-and-use)
 
