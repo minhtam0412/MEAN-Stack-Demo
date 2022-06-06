@@ -2,7 +2,7 @@ const {buildSchema} = require('graphql');
 
 module.exports = buildSchema(`
 type Product {
-  id: ID!
+  _id: ID!
   name: String!
   description: String!
   price: Float!

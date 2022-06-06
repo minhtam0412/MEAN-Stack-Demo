@@ -11,7 +11,7 @@ module.exports = {
 
     const createdProduct = await product.save();
     return {
-      ...createdProduct._doc, id: createdProduct._id.toString()
+      ...createdProduct._doc, _id: createdProduct._id.toString()
     }
   }, products: async function () {
     const products = await Product.find();
