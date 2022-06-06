@@ -68,11 +68,8 @@ app.use('/api', employeeRoute);
 userRoute(app);
 authRoute(app);
 require('../backend/routes/board.route')(app);
-app.use("/graphql/product", graphqlHTTP({
-  schema: schemaProduct, rootValue: resolver, graphiql: true,
-}));
 app.use("/graphql", graphqlHTTP({
-  schema: schema, graphiql: true,
+  schema: schemaProduct, rootValue: resolver, graphiql: true,
 }));
 
 // Create port
