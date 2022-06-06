@@ -17,3 +17,5 @@
 [Graphql Express](https://javascript.plainenglish.io/graphql-express-mongo-backend-d41625f728bf)
 
 [express-graphql-boilerplate](https://github.com/aichbauer/express-graphql-boilerplate#install-and-use)
+
+[GraphQL with NodeJs and MongoDB](https://dev.to/adityajoshi12/graphql-with-nodejs-and-mongodb-2bdm)
