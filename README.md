@@ -19,3 +19,5 @@
 [express-graphql-boilerplate](https://github.com/aichbauer/express-graphql-boilerplate#install-and-use)
 
 [GraphQL with NodeJs and MongoDB](https://dev.to/adityajoshi12/graphql-with-nodejs-and-mongodb-2bdm)
+
+[Build a Complete App with GraphQL, Node.js, MongoDB and React.js](https://documentation.peelmicro.info/other/graphql-graphql-react-event-booking.html#_10-adding-user-authentication-32-47)
