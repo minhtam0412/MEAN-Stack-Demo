@@ -18,7 +18,7 @@ module.exports = {
     console.log("-> products", products);
     return {
       products: products.map((p) => {
-        return {...p._doc, id: p._id.toString()}
+        return {...p._doc, _id: p._id.toString()}
       })
     }
   }
