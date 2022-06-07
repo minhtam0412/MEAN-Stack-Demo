@@ -5,7 +5,9 @@ const typeProduct = `type Product {
   name: String!
   description: String!
   price: Float!
-  discount: Int
+  discount: Int,
+  created_at: String
+  updated_at: String
 }`;
 
 const typeAll = `
@@ -18,7 +20,9 @@ input ProductInputData {
 }
 
 type RootMutation {
-  createProduct(productInput:ProductInputData): Product!
+  createProduct(productInput: ProductInputData): Product!
+  updateProduct(id: ID!, productInput: ProductInputData): Product!
+  deleteProduct(id: ID!): Product!
 }
 
 type ProductData {
