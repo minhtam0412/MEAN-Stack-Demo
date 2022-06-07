@@ -11,8 +11,7 @@ const camelcaseKeys = require('camelcase-keys');
 const DB_MONGO = require('../backend/config/db.config');
 const Role = require('../backend/models/role.model');
 const schema = require('./graphql/schema');
-const schemaProduct = require('./graphql/product.schema');
-const resolver = require('../backend/graphql/resolvers');
+const resolver = require('./graphql/resolver');
 const createError = require('http-errors');
 
 const corsOptions = {
@@ -57,7 +56,7 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
   extended: false,
-}),);
+}));
 app.use(removeEmptyProperties());
 app.use(camelcase());
 app.use(logger('dev'));
@@ -69,7 +68,7 @@ userRoute(app);
 authRoute(app);
 require('../backend/routes/board.route')(app);
 app.use("/graphql", graphqlHTTP({
-  schema: schemaProduct, rootValue: resolver, graphiql: true,
+  schema: schema, rootValue: resolver, graphiql: true,
 }));
 
 // Create port

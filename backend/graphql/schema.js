@@ -1,16 +1,32 @@
-const graphql = require('graphql');
-const {GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList, GraphQLSchema} = graphql;
+const productSchema = require('./schemas/product.schema');
+const {buildSchema} = require("graphql");
 
-const RootQuery = new GraphQLObjectType({
-  name: 'RootQueryType', fields: {
-    status: {
-      type: GraphQLString, resolve(parent, args) {
-        return "Welcome to GraphQL"
-      }
-    }
-  }
-});
 
-module.exports = new GraphQLSchema({
-  query: RootQuery
-});
+const RootQuery = `
+type RootQuery {
+  ${productSchema.query}
+}
+`;
+
+const RootMutation = `
+type RootMutation {
+  ${productSchema.mutation}
+}
+`;
+
+const schema = `
+schema {
+  query: RootQuery,
+  mutation: RootMutation
+}
+`
+
+const schemaBuilder = `
+${productSchema.schema}
+
+${RootQuery}
+${RootMutation}
+${schema}
+`;
+
+module.exports = buildSchema(schemaBuilder)

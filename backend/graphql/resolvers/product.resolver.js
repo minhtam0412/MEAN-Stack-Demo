@@ -13,15 +13,6 @@ const createProduct = async ({productInput}) => {
   }
 }
 
-const products = async () => {
-  const products = await Product.find();
-  return {
-    products: products.map((p) => {
-      return {...p._doc, _id: p._id.toString()}
-    })
-  }
-}
-
 const updateProduct = async ({id, productInput}) => {
   const product = await Product.findById(id);
   if (!product) {
@@ -51,4 +42,4 @@ const deleteProduct = async ({id}) => {
   }
 }
 
-module.exports = {createProduct, products, updateProduct, deleteProduct}
+module.exports = {createProduct, updateProduct, deleteProduct}
