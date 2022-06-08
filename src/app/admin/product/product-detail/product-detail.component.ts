@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {Apollo, gql} from "apollo-angular";
+import {Toast, ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-product-detail',
@@ -54,7 +55,7 @@ export class ProductDetailComponent implements OnInit {
 
   id: string | null = null;
 
-  constructor(public fb: FormBuilder, private actRoute: ActivatedRoute, private apollo: Apollo) {
+  constructor(public fb: FormBuilder, private actRoute: ActivatedRoute, private apollo: Apollo, private toast: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -108,8 +109,12 @@ export class ProductDetailComponent implements OnInit {
             discount: Number(this.myform.value['discount']),
           }
         }
-      }).subscribe(value => {
-        console.log('value', value);
+      }).subscribe({
+        next: value => {
+          this.toast.success('Cập nhật thành công')
+        }, error: err => {
+          this.toast.error('Lỗi cập nhật thông tin')
+        }
       });
     } else {
       this.apollo.mutate({
@@ -122,8 +127,12 @@ export class ProductDetailComponent implements OnInit {
             discount: Number(this.myform.value['discount']),
           }
         }
-      }).subscribe(value => {
-        console.log(value)
+      }).subscribe({
+        next: value => {
+          this.toast.success('Thêm mới thành công')
+        }, error: err => {
+          this.toast.error('Lỗi cập nhật thông tin')
+        }
       });
     }
   }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Apollo, gql} from "apollo-angular";
 import {Product} from "../model/product";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-product-list',
@@ -27,17 +28,23 @@ export class ProductListComponent implements OnInit {
 
   lstProduct: Product[] = [];
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
     this.loadData();
+
   }
 
   loadData() {
     console.log('loadData');
     this.apollo.query<any>({query: this.getProduct, fetchPolicy: 'network-only'}).subscribe(value => {
-      this.lstProduct = value.data.products.products as Product[];
+      if (value.data) {
+        this.lstProduct = value.data.products.products as Product[];
+      }
+    }, error => {
+      console.log(error)
+      this.toastr.error('Lỗi tìm kiếm thông tin!');
     });
   }
 }

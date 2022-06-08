@@ -16,6 +16,8 @@ import {authInterceptorProviders} from './_helpers/auth.interceptor';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {fas} from "@fortawesome/free-solid-svg-icons";
 import {GraphQLModule} from './graphql.module';
+import {ToastrModule} from "ngx-toastr";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -30,12 +32,14 @@ import {GraphQLModule} from './graphql.module';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     FontAwesomeModule,
     GraphQLModule,
+    ToastrModule.forRoot(),
   ],
   providers: [authInterceptorProviders],
   exports: [],
