@@ -24,7 +24,8 @@
           </div>
 
           <div class="mb-3 d-flex gap-2">
-            <button class="btn btn-success btn-block" type="submit" (click)="saveData()">Update</button>
+            <button class="btn btn-success btn-block" type="submit"
+                    (click)="saveData()">{{this.id != null ? 'Update' : 'Create'}}</button>
             <button class="btn btn-secondary btn-block" type="button" routerLink="/administrator/product">Back</button>
           </div>
         </form>
