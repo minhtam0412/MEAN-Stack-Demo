@@ -27,3 +27,5 @@
 [Node + Mongo - Boilerplate API with Email Sign Up, Verification, Authentication & Forgot Password](https://jasonwatmore.com/post/2020/05/13/node-mongo-api-with-email-sign-up-verification-authentication-forgot-password)
 
 [Ethereal](https://ethereal.email/create)
+
+[](https://geshan.com.np/blog/2021/01/nodejs-postgresql-tutorial/)

@@ -1,7 +1,6 @@
 const Pool = require('pg').Pool;
-const pool = new Pool({
-  user: 'postgres', host: 'localhost', database: 'unicorn', password: '123456aqZ', port: 5432,
-});
+const config = require('../config/postgres.config');
+const pool = new Pool(config.db);
 
 const getUsers = (request, response) => {
   pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
@@ -34,7 +33,6 @@ const getUserById = (request, response) => {
     response.status(200).json(results.rows)
   })
 }
-
 
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id)
