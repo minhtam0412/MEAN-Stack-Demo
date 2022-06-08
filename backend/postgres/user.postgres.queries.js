@@ -1,5 +1,5 @@
 const Pool = require('pg').Pool;
-const config = require('../config/postgres.config');
+const config = require('../config/postgres.db.config');
 const pool = new Pool(config.db);
 
 const getUsers = (request, response) => {
