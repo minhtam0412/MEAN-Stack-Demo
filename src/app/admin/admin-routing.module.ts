@@ -14,6 +14,12 @@ const routes: Routes = [
       return value.EmployeeModule;
     })
   },
+  {
+    path: 'product', loadChildren: () => import('../admin/product/product.module').then(value => {
+      return value.ProductModule
+        ;
+    })
+  }
 ];
 
 @NgModule({

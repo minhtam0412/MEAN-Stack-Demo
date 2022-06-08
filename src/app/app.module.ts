@@ -15,6 +15,7 @@ import {BoardUserComponent} from './client/board/board-user/board-user.component
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
 import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {fas} from "@fortawesome/free-solid-svg-icons";
+import {GraphQLModule} from './graphql.module';
 
 @NgModule({
   declarations: [
@@ -34,10 +35,10 @@ import {fas} from "@fortawesome/free-solid-svg-icons";
     ReactiveFormsModule,
     HttpClientModule,
     FontAwesomeModule,
+    GraphQLModule,
   ],
   providers: [authInterceptorProviders],
-  exports: [
-  ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
