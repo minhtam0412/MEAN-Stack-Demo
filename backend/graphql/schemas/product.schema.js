@@ -22,7 +22,7 @@ type ProductData {
 `;
 
 const query = `
-  products: ProductData!
+  getAllProduct: ProductData!
   product(id: ID!): Product!
 `;
 

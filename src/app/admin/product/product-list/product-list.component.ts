@@ -13,7 +13,7 @@ export class ProductListComponent implements OnInit {
 
   getProduct = gql`
   query {
-    products {
+    getAllProduct {
       products {
         _id
         name
@@ -27,6 +27,7 @@ export class ProductListComponent implements OnInit {
   }`;
 
   lstProduct: Product[] = [];
+  loading: boolean = true;
 
   constructor(private apollo: Apollo, private toastr: ToastrService) {
   }
@@ -37,14 +38,17 @@ export class ProductListComponent implements OnInit {
   }
 
   loadData() {
-    console.log('loadData');
-    this.apollo.query<any>({query: this.getProduct, fetchPolicy: 'network-only'}).subscribe(value => {
-      if (value.data) {
-        this.lstProduct = value.data.products.products as Product[];
+    this.loading = true;
+    this.apollo.watchQuery<any>({query: this.getProduct, fetchPolicy: 'network-only'}).valueChanges.subscribe({
+      next: value => {
+        if (value.data) {
+          this.loading = value.loading;
+          this.lstProduct = value.data.getAllProduct.products as Product[];
+        }
+      }, error: err => {
+        console.log(err);
+        this.toastr.error('Lỗi tìm kiếm thông tin!');
       }
-    }, error => {
-      console.log(error)
-      this.toastr.error('Lỗi tìm kiếm thông tin!');
     });
   }
 }
