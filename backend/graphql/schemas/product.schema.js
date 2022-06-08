@@ -23,6 +23,7 @@ type ProductData {
 
 const query = `
   products: ProductData!
+  product(id: ID!): Product!
 `;
 
 const mutation = `

@@ -1,26 +1,44 @@
-<table>
-  <thead>
-  <tr>
-    <th>#</th>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Price</th>
-    <th>Discount</th>
-    <th>Created at</th>
-    <th>Updated at</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let product of lstProduct; index as i">
-    <td>{{i + 1}}</td>
-    <td>{{product._id}}</td>
-    <td>{{product.name}}</td>
-    <td>{{product.description}}</td>
-    <td>{{product.price}}</td>
-    <td>{{product.discount}}</td>
-    <td>{{product.created_at|date:'short'}}</td>
-    <td>{{product.updated_at|date:'short'}}</td>
-  </tr>
-  </tbody>
-</table>
+<div class="container-fluid mt-3">
+  <div class="mb-3 gap-2 d-flex">
+    <button type="button" class="btn btn-primary" routerLink="/administrator/product/create-product">Create new
+    </button>
+    <button type="button" class="btn btn-success" (click)="loadData()">Search</button>
+  </div>
+  <!-- No data message -->
+  <p *ngIf="lstProduct.length <= 0" class="no-data text-center">There is no product added yet!</p>
+  <table class="table table-bordered">
+    <thead class="table-success">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Id</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Price</th>
+      <th scope="col">Discount</th>
+      <th scope="col">Created at</th>
+      <th scope="col">Updated at</th>
+      <th scope="col center">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of lstProduct; index as i">
+      <td>{{i + 1}}</td>
+      <td>{{product._id}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.description}}</td>
+      <td>{{product.price}}</td>
+      <td>{{product.discount}}</td>
+      <td>{{product.created_at|date:'short'}}</td>
+      <td>{{product.updated_at|date:'short'}}</td>
+      <td class="text-center edit-block d-flex gap-2 justify-content-center">
+          <span class="edit" [routerLink]="['/administrator/product/edit-product/', product._id]">
+            <button type="button" class="btn btn-success btn-sm">Edit</button>
+          </span>
+        <span class="delete">
+            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+          </span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

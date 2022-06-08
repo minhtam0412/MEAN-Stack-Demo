@@ -7,4 +7,14 @@ const products = async () => {
     })
   }
 }
-module.exports = {products}
+
+const product = async ({id}) => {
+  const product = await Product.findById(id);
+  if (!product) {
+    throw  new Error('Product not found!');
+  }
+  return {
+    ...product._doc, _id: product._id.toString()
+  }
+}
+module.exports = {products, product}

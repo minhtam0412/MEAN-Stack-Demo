@@ -31,7 +31,12 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apollo.watchQuery<any>({query: this.getProduct}).valueChanges.subscribe(value => {
+    this.loadData();
+  }
+
+  loadData() {
+    console.log('loadData');
+    this.apollo.query<any>({query: this.getProduct, fetchPolicy: 'network-only'}).subscribe(value => {
       this.lstProduct = value.data.products.products as Product[];
     });
   }
