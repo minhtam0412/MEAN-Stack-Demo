@@ -24,7 +24,8 @@
     <tbody>
     <tr *ngFor="let product of lstProduct; index as i">
       <td>{{i + 1}}</td>
-      <td>{{product._id}}</td>
+      <td><a href="javascript:void(0)"
+             routerLink="/administrator/product/edit-product/{{product._id}}">{{product._id}}</a></td>
       <td>{{product.name}}</td>
       <td>{{product.description}}</td>
       <td>{{product.price}}</td>

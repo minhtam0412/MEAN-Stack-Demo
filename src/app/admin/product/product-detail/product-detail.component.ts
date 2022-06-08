@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {Apollo, gql} from "apollo-angular";
-import {Toast, ToastrService} from "ngx-toastr";
+import {ToastrService} from "ngx-toastr";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-product-detail',
@@ -55,7 +56,8 @@ export class ProductDetailComponent implements OnInit {
 
   id: string | null = null;
 
-  constructor(public fb: FormBuilder, private actRoute: ActivatedRoute, private apollo: Apollo, private toast: ToastrService) {
+  constructor(public fb: FormBuilder, private actRoute: ActivatedRoute, private apollo: Apollo,
+              private toast: ToastrService, private location: Location) {
   }
 
   ngOnInit(): void {
@@ -111,9 +113,10 @@ export class ProductDetailComponent implements OnInit {
         }
       }).subscribe({
         next: value => {
-          this.toast.success('Cập nhật thành công')
+          this.toast.success('Cập nhật thành công');
+          this.location.back();
         }, error: err => {
-          this.toast.error('Lỗi cập nhật thông tin')
+          this.toast.error('Lỗi cập nhật thông tin');
         }
       });
     } else {
@@ -129,9 +132,10 @@ export class ProductDetailComponent implements OnInit {
         }
       }).subscribe({
         next: value => {
-          this.toast.success('Thêm mới thành công')
+          this.toast.success('Thêm mới thành công');
+          this.location.back();
         }, error: err => {
-          this.toast.error('Lỗi cập nhật thông tin')
+          this.toast.error('Lỗi cập nhật thông tin');
         }
       });
     }
