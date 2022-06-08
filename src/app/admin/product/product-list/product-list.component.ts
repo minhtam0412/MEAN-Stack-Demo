@@ -26,6 +26,20 @@ export class ProductListComponent implements OnInit {
     }
   }`;
 
+  deleteProduct = gql`
+  mutation($productId: ID!) {
+    deleteProduct(id:$productId) {
+      _id
+      name
+      description
+      price
+      discount
+      created_at
+      updated_at
+    }
+  }
+`;
+
   lstProduct: Product[] = [];
   loading: boolean = true;
 
@@ -48,6 +62,20 @@ export class ProductListComponent implements OnInit {
       }, error: err => {
         console.log(err);
         this.toastr.error('Lỗi tìm kiếm thông tin!');
+      }
+    });
+  }
+
+  delete(_id: string) {
+    this.apollo.mutate({
+      mutation: this.deleteProduct, variables: {
+        productId: _id
+      }
+    }).subscribe({
+      next: value => {
+        this.loadData();
+      }, error: err => {
+        console.log(err)
       }
     });
   }
