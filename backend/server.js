@@ -48,6 +48,7 @@ const authMiddle = require('./middleware/auth.middleware');
 const employeeRoute = require('../backend/routes/employee.route');
 const userRoute = require('../backend/routes/user.route');
 const authRoute = require('../backend/routes/auth.route');
+const userPostgresRoute = require('../backend/postgres/user.postgres.route');
 const {graphqlHTTP} = require("express-graphql");
 
 const app = express();
@@ -66,6 +67,7 @@ app.use('/', express.static(path.join(__dirname, '../dist/mean-stack-crud-app'))
 app.use('/api', employeeRoute);
 userRoute(app);
 authRoute(app);
+userPostgresRoute(app);
 require('../backend/routes/board.route')(app);
 app.use("/graphql", graphqlHTTP({
   schema: schema, rootValue: resolver, graphiql: true,
