@@ -7,10 +7,10 @@ const cors = require('cors');
 const logger = require('morgan');
 const createError = require('http-errors');
 const bodyParser = require('body-parser');
-const {graphqlHTTP} = require("express-graphql");
-const schema = require('./graphql/schema');
-const resolver = require('./graphql/resolver');
 const requestMiddle = require('../backend/middleware/request.middleware');
+const schemaMongo = require('./graphql/schema');
+const resolver = require('./graphql/resolver');
+const {schemaPostgres} = require('../backend/postgres/graphql/schemas/schama');
 const DB_MONGO = require('../backend/config/db.config');
 const corsOptions = require("./config/cors.config");
 const {initDataMongo} = require("./helper/mongodb.helper");
@@ -31,6 +31,8 @@ const employeeRoute = require('../backend/routes/employee.route');
 const userRoute = require('../backend/routes/user.route');
 const userPostgresRoute = require('../backend/postgres/user.postgres.route');
 const userPostgresRouterNew = require('./postgres/routes/user.postgres.route');
+const {graphqlHTTP} = require("express-graphql");
+
 
 const app = express();
 // parse requests of content-type - application/json
@@ -51,7 +53,10 @@ app.use('/', express.static(path.join(__dirname, '../dist/mean-stack-crud-app'))
 
 //register GraphQL
 app.use("/graphql", graphqlHTTP({
-  schema: schema, rootValue: resolver, graphiql: true,
+  schema: schemaMongo, rootValue: resolver, graphiql: true,
+}));
+app.use('/graphqlPostgres', graphqlHTTP({
+  schema: schemaPostgres, graphiql: true
 }));
 
 //Use API Routes
