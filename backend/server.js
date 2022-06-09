@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({
   extended: false,
 }));
 app.use(requestMiddle.removeEmptyProperties());
-app.use(requestMiddle.camelcase);
+app.use(requestMiddle.camelcase());
 app.use(logger('dev'));
 app.use(cors(corsOptions)); //cross domain
 app.use(express.static(path.join(__dirname, '../dist/mean-stack-crud-app')));
