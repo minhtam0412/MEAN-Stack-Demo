@@ -6,33 +6,17 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const omitEmpty = require('omit-empty');
-const camelcaseKeys = require('camelcase-keys');
 const DB_MONGO = require('../backend/config/db.config');
 const Role = require('../backend/models/role.model');
 const schema = require('./graphql/schema');
 const resolver = require('./graphql/resolver');
 const createError = require('http-errors');
+const requestMiddle = require('../backend/middleware/request.middleware');
 
 const corsOptions = {
   origin: ['http://localhost:4200', 'http://localhost:4300'],
 };
-const removeEmptyProperties = () => {
-  return function (req, res, next) {
-    req.body = omitEmpty(req.body);
-    req.params = omitEmpty(req.params);
-    req.query = omitEmpty(req.query);
-    next()
-  }
-};
-const camelcase = () => {
-  return function (req, res, next) {
-    req.body = camelcaseKeys(req.body, {deep: true});
-    req.params = camelcaseKeys(req.params);
-    req.query = camelcaseKeys(req.query);
-    next()
-  }
-};
+
 
 // Connecting with mongo db
 mongoose.connect(DB_MONGO.url, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -59,8 +43,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false,
 }));
-app.use(removeEmptyProperties());
-app.use(camelcase());
+app.use(requestMiddle.removeEmptyProperties());
+app.use(requestMiddle.camelcase);
 app.use(logger('dev'));
 app.use(cors(corsOptions)); //cross domain
 app.use(express.static(path.join(__dirname, '../dist/mean-stack-crud-app')));
