@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "../../../_service/token-storage.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-menu',
@@ -10,7 +11,7 @@ export class MenuComponent implements OnInit {
 
   user: any;
 
-  constructor(private storageService: TokenStorageService) {
+  constructor(private storageService: TokenStorageService, private router: Router) {
     this.user = this.storageService.userValue;
   }
 
@@ -19,5 +20,11 @@ export class MenuComponent implements OnInit {
 
   closeMenu() {
     document.body.classList.toggle('sb-sidenav-toggled');
+  }
+
+  navigateToClientApp() {
+    if (confirm('Bạn có chắc muốn điều hướng sang Client App?')) {
+      this.router.navigateByUrl('/');
+    }
   }
 }
