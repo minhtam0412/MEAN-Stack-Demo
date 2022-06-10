@@ -53,8 +53,12 @@ app.use(requestMiddle.camelcase());
 
 app.use(logger('dev'));
 app.use(cors(corsOptions)); //cross domain
+
+//register static file
 app.use(express.static(path.join(__dirname, '../dist/mean-stack-crud-app')));
 app.use('/', express.static(path.join(__dirname, '../dist/mean-stack-crud-app')));
+app.use('/uploads/original', express.static(path.join(__dirname, `/uploads/original`)));
+app.use('/uploads/thumbnail', express.static(path.join(__dirname, `/uploads/thumbnail`)));
 
 app.use(async (req, res, next) => {
   try {
@@ -73,7 +77,7 @@ app.post("/upload", async (req, res) => {
     await publishToExchange(req.RMQProducer, {
       message, routingKey: "image",
     });
-    res.status(200).send("File uploaded & created thumbnail successfuly!")
+    res.status(200).send(`File uploaded & created thumbnail successfuly at localhost:${process.env.API_PORT || 4000}/uploads/original/${message}`)
   } catch (error) {
     console.log(error)
     res.status(400).send(`File not uploaded!`)
