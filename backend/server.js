@@ -14,6 +14,9 @@ const {schemaPostgres} = require('../backend/postgres/graphql/schemas/schama');
 const DB_MONGO = require('../backend/config/db.config');
 const corsOptions = require("./config/cors.config");
 const {initDataMongo} = require("./helper/mongodb.helper");
+const fileUpload = require("express-fileupload");
+const Broker = require("./rabbitmq/rabbitMQ");
+const {publishToExchange, saveImage} = require("./rabbitmq/utils/function");
 
 // Connecting with mongo db
 mongoose.connect(DB_MONGO.url, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -33,8 +36,10 @@ const userPostgresRoute = require('../backend/postgres/user.postgres.route');
 const userPostgresRouterNew = require('./postgres/routes/user.postgres.route');
 const {graphqlHTTP} = require("express-graphql");
 
-
 const app = express();
+app.use(fileUpload({}));
+const RMQProducer = new Broker().init();
+
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
@@ -50,6 +55,30 @@ app.use(logger('dev'));
 app.use(cors(corsOptions)); //cross domain
 app.use(express.static(path.join(__dirname, '../dist/mean-stack-crud-app')));
 app.use('/', express.static(path.join(__dirname, '../dist/mean-stack-crud-app')));
+
+app.use(async (req, res, next) => {
+  try {
+    req.RMQProducer = await RMQProducer;
+    next();
+  } catch (error) {
+    process.exit(1);
+  }
+});
+
+// Route upload file use RabbitMQ
+app.post("/upload", async (req, res) => {
+  const {data} = req.files.image;
+  try {
+    const message = await saveImage(data)
+    await publishToExchange(req.RMQProducer, {
+      message, routingKey: "image",
+    });
+    res.status(200).send("File uploaded & created thumbnail successfuly!")
+  } catch (error) {
+    console.log(error)
+    res.status(400).send(`File not uploaded!`)
+  }
+});
 
 //register GraphQL
 app.use("/graphql", graphqlHTTP({
@@ -84,4 +113,12 @@ const port = process.env.API_PORT || 4000;
 // Setting up port with expressjs
 const server = app.listen(port, () => {
   console.log(`Connected to port ${port}`)
+});
+
+process.on("SIGINT", async () => {
+  process.exit(1);
+});
+process.on("exit", (code) => {
+  RMQProducer.channel.close();
+  RMQProducer.connection.close();
 });
