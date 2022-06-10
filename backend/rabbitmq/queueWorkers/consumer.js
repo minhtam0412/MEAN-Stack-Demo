@@ -56,6 +56,7 @@ const handleImage = async (payload, ack) => {
 
 async function processUploads() {
   try {
+    console.log('Consumer processUploads started');
     const consumer = await RMQConsumer;
     await consumer.createEx({
       name: EXCHANGE, type: "direct",
