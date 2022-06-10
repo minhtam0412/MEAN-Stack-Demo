@@ -42,6 +42,7 @@ const handleImage = async (payload, ack) => {
 
     const dirThumb = path.join(__dirname, '../../uploads/thumbnail');
     if (!fs.existsSync(dirThumb)) {
+      console.log(`Created dir path: ${dirThumb}`);
       fs.mkdirSync(dirThumb);
     }
     // we pipe our readstream to a writestream
@@ -59,7 +60,7 @@ async function processUploads() {
     await consumer.createEx({
       name: EXCHANGE, type: "direct",
     });
-    consumer.subscribe({exchange: "upload", bindingKey: "image"}, handleImage);
+    await consumer.subscribe({exchange: "upload", bindingKey: "image"}, handleImage);
   } catch (error) {
     console.log('Error processUploads', error);
   }

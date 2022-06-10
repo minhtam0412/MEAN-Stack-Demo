@@ -38,10 +38,18 @@ exports.saveImage = (data) => {
       reject("File not available!");
     }
     try {
+
+      const dirUpload = path.join(__dirname, '../../uploads');
+      if (!fs.existsSync(dirUpload)) {
+        console.log(`Created dir path: ${dirUpload}`);
+        fs.mkdirSync(dirUpload);
+      }
+
       const fileName = `img_${uuid()}.jpg`;
 
       const dir = path.join(__dirname, '../../uploads/original');
       if (!fs.existsSync(dir)) {
+        console.log(`Created dir path: ${dir}`);
         fs.mkdirSync(dir);
       }
 
