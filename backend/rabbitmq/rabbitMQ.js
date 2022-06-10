@@ -7,9 +7,13 @@ class MessageBroker {
   }
 
   async init() {
-    this.connection = await amqp.connect(process.env.RABBITMQ_URL || 'amqp://localhost:5672');
-    this.channel = await this.connection.createChannel();
-    return this;
+    try {
+      this.connection = await amqp.connect(process.env.RABBITMQ_URL || 'amqp://localhost:5672');
+      this.channel = await this.connection.createChannel();
+      return this;
+    } catch (e) {
+      return null;
+    }
   }
 
   async createEx({name, type, durable = true}) {
