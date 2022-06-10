@@ -37,8 +37,8 @@ const handleImage = async (payload, ack) => {
 
     const [width, height] = [400, 300];
 
-    // we resize the image
-    transform = transform.resize(width || 400, height || 300);
+    // we resize 1/2 the image
+    transform = transform.resize(Math.round(width * 0.5));
 
     const dirThumb = path.join(__dirname, '../../uploads/thumbnail');
     if (!fs.existsSync(dirThumb)) {
