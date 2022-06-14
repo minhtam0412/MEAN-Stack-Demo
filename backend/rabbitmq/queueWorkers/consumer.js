@@ -6,7 +6,7 @@ const {fileExists} = require("../utils/function");
 const path = require("path");
 const RMQConsumer = new Broker().init();
 const pipeline = promisify(require("stream").pipeline);
-const EXCHANGE = "upload";
+const EXCHANGE_UPLOAD = process.env.EXCHANGE_UPLOAD;
 
 /**
  * Process 1:1 message and stores in db, also processes group messages 1 by 1
@@ -59,9 +59,9 @@ async function processUploads() {
     console.log('Consumer processUploads started');
     const consumer = await RMQConsumer;
     await consumer.createEx({
-      name: EXCHANGE, type: "direct",
+      name: EXCHANGE_UPLOAD, type: "direct",
     });
-    await consumer.subscribe({exchange: "upload", bindingKey: "image"}, handleImage);
+    await consumer.subscribe({exchange: EXCHANGE_UPLOAD, bindingKey: process.env.BINDING_KEY_UPLOAD}, handleImage);
   } catch (error) {
     console.log('Error processUploads', error);
   }

@@ -18,12 +18,12 @@ exports.fileExists = (path, flag = 1) => {
 exports.publishToExchange = async (instance, {message, routingKey}) => {
   try {
     await instance.createEx({
-      name: process.env.EXCHANGE, type: 'direct'
-    })
+      name: process.env.EXCHANGE_UPLOAD, type: 'direct'
+    });
 
     await instance.publish({
-      ex: process.env.EXCHANGE, routingKey: process.env.BINDING_KEY
-    }, message)
+      ex: process.env.EXCHANGE_UPLOAD, routingKey: routingKey
+    }, message);
 
     return Promise.resolve()
   } catch (error) {
