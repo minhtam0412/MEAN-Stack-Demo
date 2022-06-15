@@ -75,7 +75,10 @@ app.post("/upload", async (req, res) => {
   try {
     const message = await saveImage(data)
     await publishToExchange(req.RMQProducer, {
-      message, routingKey: process.env.BINDING_KEY_UPLOAD,
+      exchangeName: process.env.EXCHANGE_UPLOAD, message, routingKey: process.env.BINDING_KEY_UPLOAD,
+    });
+    await publishToExchange(req.RMQProducer, {
+      exchangeName: 'EXCHANGE_EMAIL', message: 'minhtam0412@gmail.com', routingKey: 'email',
     });
     res.status(200).send(`File uploaded & created thumbnail successfuly at localhost:${process.env.API_PORT || 4000}/uploads/original/${message}`)
   } catch (error) {

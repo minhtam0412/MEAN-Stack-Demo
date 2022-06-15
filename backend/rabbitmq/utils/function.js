@@ -15,14 +15,14 @@ exports.fileExists = (path, flag = 1) => {
   })
 }
 
-exports.publishToExchange = async (instance, {message, routingKey}) => {
+exports.publishToExchange = async (instance, {exchangeName, message, routingKey}) => {
   try {
     await instance.createEx({
-      name: process.env.EXCHANGE_UPLOAD, type: 'direct'
+      name: exchangeName, type: 'direct'
     });
 
     await instance.publish({
-      ex: process.env.EXCHANGE_UPLOAD, routingKey: routingKey
+      ex: exchangeName, routingKey: routingKey
     }, message);
 
     return Promise.resolve()

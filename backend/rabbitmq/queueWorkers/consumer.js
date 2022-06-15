@@ -49,22 +49,35 @@ const handleImage = async (payload, ack) => {
     pipeline(readStream.pipe(transform), fs.createWriteStream(`${dirThumb}/${fileName}`));
     // we acknowledge the delivery
     ack();
+    console.log(`Handle Image at ${new Date()}`);
   } catch (error) {
     console.error('Error handleImage', error);
   }
 };
 
+function sleep(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  })
+}
+
 async function processUploads() {
   try {
-    console.log('Consumer processUploads started');
+    console.log('Consumer started');
     const consumer = await RMQConsumer;
-    await consumer.createEx({
-      name: EXCHANGE_UPLOAD, type: "direct",
-    });
+    await consumer.createEx({name: EXCHANGE_UPLOAD, type: "direct",});
     await consumer.subscribe({exchange: EXCHANGE_UPLOAD, bindingKey: process.env.BINDING_KEY_UPLOAD}, handleImage);
+
+    await consumer.createEx({name: 'EXCHANGE_EMAIL', type: 'direct'});
+    await consumer.subscribe({exchange: 'EXCHANGE_EMAIL', bindingKey: 'email'}, handleEmail)
   } catch (error) {
     console.log('Error processUploads', error);
   }
+}
+
+const handleEmail = async (payload, ack) => {
+  console.log(`Handle Email ${payload.content.toString()} at ${new Date()}`);
+  ack();
 }
 
 processUploads();
