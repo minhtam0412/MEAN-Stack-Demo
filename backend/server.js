@@ -7,6 +7,7 @@ const cors = require('cors');
 const logger = require('morgan');
 const createError = require('http-errors');
 const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
 const requestMiddle = require('../backend/middleware/request.middleware');
 const schemaMongo = require('./graphql/schema');
 const resolver = require('./graphql/resolver');
@@ -85,6 +86,35 @@ app.post("/upload", async (req, res) => {
     console.log(error)
     res.status(400).send(`File not uploaded!`)
   }
+});
+
+app.post('/sendmail', (req, res) => {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'minhtam0412@gmail.com',
+      pass: 'yplheogqbzpctkcr'
+    },
+    tls: {
+      rejectUnauthorized: false
+    }
+  });
+
+  const mainOptions = {
+    from: 'NQH-Test nodemailer',
+    to: req.body.mail,
+    subject: 'Test Nodemailer',
+    text: req.body.content || 'Your text is here',
+  }
+  transporter.sendMail(mainOptions, function (err, info) {
+    if (err) {
+      res.status(400).send({'message': 'Lỗi gửi mail: ' + err})
+    } else {
+      res.status(200).send({'message': info.response})
+    }
+  });
 });
 
 //register GraphQL
