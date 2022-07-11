@@ -42,3 +42,5 @@ testem.log
 Thumbs.db
 /backend/uploads/thumbnail
 /backend/uploads/original
+*.lock
+package-lock.json
